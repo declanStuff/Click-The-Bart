@@ -3,6 +3,7 @@ var b = 0;
 let count = 0;
 let Pcount = 0;
 const bart = document.getElementById("Bart");
+var servNum = 0;
 
 const API = "https://script.google.com/macros/s/AKfycbwCR7SO8HCtZNMorwSHRZwbfEJXkwoDe9usA0NRBJpQu3zPc0OvmBCpPrawbr9MPN1Q/exec";
 
@@ -14,6 +15,18 @@ if(doAdd == 1){
         document.getElementById("click_count").textContent = d.count;
     });
     doAdd = 0;
+}
+
+if (doAdd == 0){
+    fetch(API, { method: "POST" })
+    .then(r => r.json())
+    .then(d => {
+        servnum = d.count;
+        if(count > servNum || count < servNum){
+            count = servNum;
+        }
+    });
+
 }
 
 bart.addEventListener("click", () => {
