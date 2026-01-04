@@ -8,7 +8,7 @@ var servNum = 0;
 const API = "https://script.google.com/macros/s/AKfycbwCR7SO8HCtZNMorwSHRZwbfEJXkwoDe9usA0NRBJpQu3zPc0OvmBCpPrawbr9MPN1Q/exec";
 
 if(doAdd == 1){
-    fetch(API, { method: "POST" })
+    fetch(API)
     .then(r => r.json())
     .then(d => {
         count = d.count;
@@ -17,17 +17,20 @@ if(doAdd == 1){
     doAdd = 0;
 }
 
-if (doAdd == 0){
-    fetch(API, { method: "POST" })
+function update(){
+    fetch(API)
     .then(r => r.json())
     .then(d => {
-        servnum = d.count;
-        if(count > servNum || count < servNum){
+        servNum = d.count;
+        if(count < servNum){
             count = servNum;
+            document.getElementById("click_count").textContent = count;
         }
     });
-
 }
+
+update();
+setInterval(update, 1000)
 
 bart.addEventListener("click", () => {
     fetch(API, { method: "POST" })
